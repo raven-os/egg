@@ -1,0 +1,11 @@
+msgid "title"
+msgstr ""
+
+msgid "current_lang"
+msgstr ""
+
+msgid "lang_fr_button"
+msgstr ""
+
+msgid "lang_en_button"
+msgstr ""
