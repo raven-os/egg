@@ -1,0 +1,11 @@
+msgid "title"
+msgstr "Hello"
+
+msgid "current_lang"
+msgstr "You have the english window"
+
+msgid "lang_fr_button"
+msgstr "French"
+
+msgid "lang_en_button"
+msgstr "English"
