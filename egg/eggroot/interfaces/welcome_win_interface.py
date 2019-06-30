@@ -1,6 +1,6 @@
 import abc
 
-class win1_interface(metaclass=abc.ABCMeta):
+class welcome_win_interface(metaclass=abc.ABCMeta):
     @abc.abstractmethod 
     def lunch(self):
         pass

@@ -17,11 +17,14 @@ class LanguageManagement(object):
             self.locales_folder = './locales'
         self.translation_obj = {}
         
-        if lang != None:
+        if lang != None and file != None:
             self.translation_obj[file] = gettext.translation(
                 domain=file, localedir=self.locales_folder,
                 fallback=True, languages=[lang])
             self.translation_obj[file].install()
+
+    def get_current_language(self):
+        return self.current_language
 
     def change_language_file(self, lang, file):
         if lang in self.available_languages :

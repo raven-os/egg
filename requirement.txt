@@ -8,3 +8,43 @@ find ./locales -name "*.po" | while read f; do msgfmt3.py -o ${f%.po}.mo $f; don
 compile po file to .mo
 
 msgfmt3.py -o win1.mo win1
+
+libparted
+
+pygeoip
+
+5.1 - Choisir la langue de l’installeur
+5.2 - Choisir le disque dur cible de l’installation
+
+L’utilisateur doit pouvoir choisir le disque dur et la partition cible de l’installation et / ou procéder au découpement de partitions de son choix
+
+Lister l’ensemble des disque durs existants
+Lister l’ensemble des partitions existantes
+Permettre à l’utilisateur de découper ou de regrouper ses partitions
+Permettre à l’utilisateur de choisir ses partitions root, home, boot et swap.
+Permettre à l’utilisateur de choisir le système de fichiers à utiliser pour chacune de ses partitions
+
+
+5.3 - Choisir le clavier à utilliser après installation
+Menu de sélection du choix de la disposition des touches d’un clavier de saisie
+Pouvoir tester le clavier choisi avant de valider le choix
+
+5.4 - Choisir la langue du système
+Avoir mon système dans la langue de mon choix
+
+5.5 - Choisir le fuseau horaire du système
+Menu déroulant pour permettre à l’utilisateur de choisir son emplacement géographique.
+Récupération automatique de l’heure en fonction du fuseau horaire.
+
+5.6 - Renseigner les informations systèmes (nom d’utilisateur, etc.)
+Enregistrement du compte utilisateur à créer.
+Configuration du type d’interface et d’écosystème utilisé pour l’utilisateur.
+
+5.7 - Renseigner la configuration réseau
+Choisir, si besoin, le serveur proxy à utiliser
+Choisir, si besoin, l’adresse IP statique à utiliser
+
+
+5.8 - Appliquer l’installation
+Effectuer les commandes en fonction des configurations précédentes sans mettre en défaut la machine de l’utilisateur.
+Installation d’un chargeur d’amorçage (GRUB).
