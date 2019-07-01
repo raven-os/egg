@@ -23,6 +23,12 @@ def main():
     # init lang file
     load_lang_files(eggroot.containers.Locales.locale_general())
 
+    # check cette histoire de permissions
+    # # Immediately drop permissions before we init GTK
+    # p = PermissionsManager()
+    # p.down_permissions()
+
+
     if gtk == True:
         if os.geteuid() != 0:
             eggroot.containers.GraphicGui.custom_modal_gtk().lunch(
