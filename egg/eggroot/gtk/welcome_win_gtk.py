@@ -1,3 +1,4 @@
+import eggroot.containers
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GdkPixbuf
@@ -6,6 +7,8 @@ from eggroot.interfaces.welcome_win_interface import welcome_win_interface
 
 # pages
 from eggroot.gtk.pages.language_live_page_gtk import language_live_page_gtk
+from eggroot.gtk.pages.language_installation_page_gtk import language_installation_page_gtk
+
 
 class FancyLabel(Gtk.Label):
 
@@ -25,9 +28,6 @@ class Handler:
     def onDestroy(self, *args):
         Gtk.main_quit()
 
-    def onButtonPressed(self, button, *data):
-        print("Hello World!")
-
     def onChangToFr(self, button, *data):
         data[1].change_language_all_files('fr')
         data[0].load_lang()
@@ -36,61 +36,104 @@ class Handler:
         data[1].change_language_all_files('en')
         data[0].load_lang()
 
+class Components():
+    def __init__(self, builder):
+        self._allComponents = {}
+        self._builder = builder
+
+    def load_component_main_window(self, config):
+        # put in config and for
+        for component_name in config["window_list_components"]:
+            self._allComponents[component_name] = self._builder.get_object(component_name)
+
+    def set_component(self, component_name, component):
+        self._allComponents[component_name] = component
+
+    def get_component(self, component_name):
+        return self._allComponents[component_name]
+
 @welcome_win_interface.register
 class welcome_win_gtk(welcome_win_interface):
 
-   
-
-    def __init__(self, config, language_manager):
+    def __init__(self, language_manager, config_general, config_main_window):
+        self._config_main_window = config_main_window
+        self._config_general = config_general
         self._pages = list()
         self._page_index = 0
         self._lang_manager = language_manager
         self._lang_manager.change_language_all_files('fr')
         self._builder = Gtk.Builder()
-
-        if __debug__:
-            self._builder.add_from_file("/home/desaye_c/tek/egg/egg/eggroot/gtk/xml_gtk/welcome_win.glade")
-        else:
-            self._builder.add_from_file("./eggroot/gtk/xml_gtk/welcome_win.glade")
+        self._builder.add_from_file(self._config_main_window["window_xml_file"])
 
         self._builder.connect_signals(
-            {
-                'onButtonPressed': (Handler().onButtonPressed, language_manager),
-                'onDestroy': (Handler().onDestroy),
-                'onChangToFr': (Handler().onChangToFr, self, language_manager),
-                'onChangToEn': (Handler().onChangToEn, self, language_manager)
-            })
+        {
+            'onDestroy': (Handler().onDestroy),
+            'onButtonExit': (Handler().onDestroy),
+            'onChangToFr': (Handler().onChangToFr, self, language_manager),
+            'onChangToEn': (Handler().onChangToEn, self, language_manager)
+        })
 
-        allcomponents = self._builder.get_objects()
+        # allcomponents = self._builder.get_objects()
         self.init_window()
         self.load_lang()
-        self.full_screen_win()
+        self.set_full_screen_win()
         self.set_scroll_left()
         self.set_theme()
         self.register_all_window()
         self.update_current_page()
-
-        self._window.show_all()
+        self.set_button_action()
+        self._component.get_component("welcome_win").show_all()
 
     # init config
     def init_window(self):
-        self._window = self._builder.get_object("welcome_win")
-        self._nav_prev_btn = self._builder.get_object("welcome_win_prev_btn")
-        self._nav_next_btn = self._builder.get_object("welcome_win_next_btn")
-        self._left_top_icon = self._builder.get_object("welcome_win_left_top_logo")
-        self._left_bot_icon = self._builder.get_object("welcome_win_left_bot_logo")
+        self._component = Components(self._builder)
+        self._component.load_component_main_window(self._config_main_window)
 
-        self._window.set_title(self._lang_manager.print_in_lang('welcome_win', 'title'))
-        self._left_label_box = self._builder.get_object("welcome_win_welcome_left_list_text_box")
+        self._component.get_component("welcome_win").set_title(self._lang_manager.print_in_lang('welcome_win', 'title'))
+  
+        self._component.get_component("welcome_win_left_bot_label").set_label("")
+        self._component.get_component("welcome_win_left_bot_logo").set_from_file(self._config_main_window["window_logo_bot_path"])
 
-        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-                filename="./img/raven_title_black.png", 
-                width=24, 
-                height=24, 
-                preserve_aspect_ratio=True)
+        self.set_title("Hello")
 
+    def set_full_screen_win(self):
+        if self._config_main_window["window_fullscreen"]:
+            self._component.get_component("welcome_win").fullscreen()
+            # self._window.hide()
 
-        self._left_bot_icon.new_from_pixbuf(pixbuf)
+    def set_scroll_left(self):
+        ltr = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT
+        self._component.get_component("welcome_win_welcome_right_stack").set_transition_type(ltr)
+
+    def set_theme(self):
+        self._settings = Gtk.Settings.get_default()
+        self._settings.set_property("gtk-application-prefer-dark-theme", True)
+
+    def set_button_action(self):
+        # checker ici mettre dans la classe handler
+        self._component.get_component("welcome_win_prev_btn").connect("clicked", lambda x: self.prev_page())
+        self._component.get_component("welcome_win_next_btn").connect("clicked", lambda x: self.next_page())
+
+    def set_title(self, message):
+        self._component.get_component("welcome_win_welcome_right_header_label").set_halign(Gtk.Align.START)
+        mk = u"<span font-size='x-large'>{}</span>".format(message)
+        self._component.get_component("welcome_win_welcome_right_header_label").set_label(mk)
+        
+    # manage other window
+    def register_all_window(self):
+        self.add_installer_page(eggroot.containers.GraphicGui.language_installation_page_gtk())
+        self.add_installer_page(eggroot.containers.GraphicGui.language_live_page_gtk())
+        # self.add_installer_page(InstallerLocationPage())
+        # self.add_installer_page(InstallerGeoipPage())
+        # self.add_installer_page(InstallerKeyboardPage())
+        # self.add_installer_page(InstallerTimezonePage())
+        # self.add_installer_page(InstallerDiskLocationPage())
+        # self.add_installer_page(InstallerPartitioningPage())
+        # self.add_installer_page(InstallerSystemPage())
+        # self.add_installer_page(InstallerUsersPage())
+        # self.add_installer_page(InstallerSummaryPage(self.plasma))
+        # self.add_installer_page(InstallerProgressPage())
+        # self.add_installer_page(InstallationCompletePage())
 
     def load_lang(self):
         pass
@@ -106,53 +149,6 @@ class welcome_win_gtk(welcome_win_interface):
         # current_lang_label = self._builder.get_object("lang")
         # current_lang_label.set_label(self._lang_manager.print_in_lang('welcome_win', 'current_lang'))
 
-    def full_screen_win(self):
-        self._window.fullscreen()
-        # self._window.hide()
-
-    def set_scroll_left(self):
-        ltr = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT
-        self.installer_right_stack = self._builder.get_object("welcome_win_welcome_right_stack")
-        self.installer_right_stack.set_transition_type(ltr)
-
-    def set_theme(self):
-        self._settings = Gtk.Settings.get_default()
-        self._settings.set_property("gtk-application-prefer-dark-theme", True)
-
-    def set_button_action(self):
-        self._nav_prev_btn.connect("clicked", lambda x: self.prev_page())
-        self._nav_next_btn.connect("clicked", lambda x: self.next_page())
-
-
-
-
-
-
-    # manage other window
-    def register_all_window(self):
-        self.add_installer_page(language_live_page_gtk())
-        self.add_installer_page(language_live_page_gtk())
-        # self.add_installer_page(InstallerLocationPage())
-        # self.add_installer_page(InstallerGeoipPage())
-        # self.add_installer_page(InstallerKeyboardPage())
-        # self.add_installer_page(InstallerTimezonePage())
-        # self.add_installer_page(InstallerDiskLocationPage())
-        # self.add_installer_page(InstallerPartitioningPage())
-        # self.add_installer_page(InstallerSystemPage())
-        # self.add_installer_page(InstallerUsersPage())
-        # self.add_installer_page(InstallerSummaryPage(self.plasma))
-        # self.add_installer_page(InstallerProgressPage())
-        # self.add_installer_page(InstallationCompletePage())
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -161,9 +157,10 @@ class welcome_win_gtk(welcome_win_interface):
 
     def add_installer_page(self, page):
         """ Work a page into the set """
-        self.installer_right_stack.add_named(page, page.get_name())
+        # checker si pas besoin ID après
+        # self._component.get_component("welcome_win_welcome_right_stack").add_named(page, page.get_name())
         lab = FancyLabel(page)
-        self._left_label_box.pack_start(lab, False, False, 0)
+        self._component.get_component("welcome_win_welcome_left_list_text_box").pack_start(lab, False, False, 0)
         self._pages.append(page)
 
     def next_page(self):
@@ -217,42 +214,42 @@ class welcome_win_gtk(welcome_win_interface):
             self.set_can_previous(True)
         # page.prepare(self.info)
 
-        for label in self._left_label_box.get_children():
+        for label in self._component.get_component("welcome_win_welcome_left_list_text_box").get_children():
             if label.page_id == page.get_name():
                 label.get_style_context().remove_class("dim-label")
             else:
                 label.get_style_context().add_class("dim-label")
 
         iname = page.get_icon_name()
-        self._left_top_icon.set_from_icon_name(iname,
-                                           Gtk.IconSize.DIALOG)
-        self.installer_right_stack.set_visible_child_name(page.get_name())
+        self._component.get_component("welcome_win_left_top_logo").set_from_icon_name(iname,
+            Gtk.IconSize.DIALOG)
+        self._component.get_component("welcome_win_welcome_right_stack").set_visible_child_name(page.get_name())
 
     def set_can_previous(self, can_prev):
-        self._nav_prev_btn.set_sensitive(can_prev)
+        self._component.get_component("welcome_win_prev_btn").set_sensitive(can_prev)
 
     def set_can_next(self, can_next):
-        self._nav_prev_btn.set_sensitive(can_next)
+        self._component.get_component("welcome_win_next_btn").set_sensitive(can_next)
 
     def set_final_step(self, final):
         """ Mark this as the final step, should also
             add a prompt on selection """
         if final:
-            self._nav_next_btn.set_label("Install")
+            self._component.get_component("welcome_win_next_btn").set_label("Install")
         else:
-            self._nav_next_btn.set_label("Next")
+            self._component.get_component("welcome_win_next_btn").set_label("Next")
         self.is_final_step = final
 
     def set_can_quit(self, can_quit):
         """ Override quit handling """
         self.can_quit = can_quit
         if not self.can_quit:
-            self._nav_prev_btn.hide()
-            self._nav_next_btn.hide()
+            self._component.get_component("welcome_win_prev_btn").hide()
+            self._component.get_component("welcome_win_next_btn").hide()
             # self.set_deletable(False)
         else:
-            self._nav_prev_btn.show_all()
-            self._nav_next_btn.show_all()
+            self._component.get_component("welcome_win_prev_btn").show_all()
+            self._component.get_component("welcome_win_next_btn").show_all()
             # self.set_deletable(True)
 
 

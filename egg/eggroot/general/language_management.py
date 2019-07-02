@@ -2,26 +2,27 @@ import os
 import gettext
 
 class LanguageManagement(object):
-    def __init__(self, lang=None, file=None):
+    def __init__(self, locales_folder=None, lang=None, file=None):
+        self.locales_folder = locales_folder
         if lang == None:
-            lang = os.environ['LANGUAGE']
+            if "LANGUAGE" in os.environ:
+                lang = os.environ['LANGUAGE']
         else:
             os.environ['LANGUAGE'] = lang
         self.default_language = lang
 
         self.current_language = lang
         self.available_languages = ['en', 'fr']
-        if __debug__:
-            self.locales_folder = '/home/desaye_c/tek/egg/egg/locales'
-        else:
-            self.locales_folder = './locales'
         self.translation_obj = {}
         
-        if lang != None and file != None:
+        if lang != None and file != None and locales_folder != None:
             self.translation_obj[file] = gettext.translation(
                 domain=file, localedir=self.locales_folder,
                 fallback=True, languages=[lang])
             self.translation_obj[file].install()
+
+    def set_locales_folder(self, locales_folder):
+        self.locales_folder = locales_folder
 
     def get_current_language(self):
         return self.current_language

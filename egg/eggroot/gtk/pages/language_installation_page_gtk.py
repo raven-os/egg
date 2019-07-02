@@ -1,9 +1,6 @@
 from eggroot.gtk.pages.base_page_gtk import BasePageGtk
 from gi.repository import Gtk, GnomeDesktop, Gdk
 
-from eggroot.general.language_management import LanguageManagement
-
-
 default_locales = [
     "en_US.UTF-8",
     "de_DE.UTF-8",
@@ -38,7 +35,7 @@ class LcLabel(Gtk.Label):
         self.show()
 
 
-class language_live_page_gtk(BasePageGtk):
+class language_installation_page_gtk(BasePageGtk):
     """ Basic language page. """
 
     # Scrollbox
@@ -52,9 +49,8 @@ class language_live_page_gtk(BasePageGtk):
 
     def __init__(self, language_manager, config):
         BasePageGtk.__init__(self)
-        
-        self._language_manager = language_manager
 
+        self._language_manager = language_manager
 
         self.scroll = Gtk.ScrolledWindow(None, None)
         self.scroll.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
@@ -123,13 +119,11 @@ class language_live_page_gtk(BasePageGtk):
         else:
             self.info.owner.set_can_next(False)
 
-    # Sidebar box left
     def get_sidebar_title(self):
-        return "Language live cd"
+        return "Language"
 
-    # For the Id
     def get_name(self):
-        return "language_live_cd"
+        return "language_installation"
 
     def get_icon_name(self, plasma=False):
         return "preferences-desktop-locale"

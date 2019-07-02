@@ -124,3 +124,4 @@ dmypy.json
 
 # Custom
 *~
+*_dev.json

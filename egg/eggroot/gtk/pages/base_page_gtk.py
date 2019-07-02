@@ -1,14 +1,13 @@
 
 from gi.repository import Gtk
 
-
 class BasePageGtk(Gtk.Box):
     """ Base widget for all page implementations to save on duplication. """
 
     def __init__(self):
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.VERTICAL, spacing=0)
 
-        mk = u"<span font-size='x-large'>{}</span>".format(self.get_title())
+        mk = u"<span font-size='x-large'>{}</span>".format("zizi")
         lab = Gtk.Label.new(mk)
         lab.set_property("margin-top", 10)
         lab.set_property("margin-start", 20)
@@ -19,9 +18,6 @@ class BasePageGtk(Gtk.Box):
 
         sep = Gtk.Separator.new(Gtk.Orientation.HORIZONTAL)
         self.pack_start(sep, False, False, 0)
-
-    def get_title(self):
-        return None
 
     def get_sidebar_title(self):
         return "Not implemented.."
