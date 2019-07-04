@@ -1,0 +1,20 @@
+msgid "title"
+msgstr "Live CD language configuration"
+
+msgid "sidebar_title"
+msgstr "Live CD language"
+
+msgid "desc_language"
+msgstr "Language:"
+
+msgid "desc_keyboard"
+msgstr "Keyboard:"
+
+msgid "input_keyboard"
+msgstr "Try the keyboard here"
+
+msgid "french"
+msgstr "french"
+
+msgid "english"
+msgstr "english"

@@ -4,8 +4,8 @@ import sys
 import os
 # print("win1 gtk.py's __name__: {}".format(__name__))
 # print("win1 gtk.py's __package__: {}".format(__package__))
-# pass text for config all by text
 
+#check why it's impossible utf8 in locale file
 def load_lang_files(locale_general, config_general):
     locale_general.set_locales_folder(config_general["locales_folder"])
     locale_general.change_language_all_files(config_general["default_language_code"])
@@ -45,7 +45,6 @@ def main():
     # p = PermissionsManager()
     # p.down_permissions()
 
-
     if gtk == True:
         if not config_general["lunch_without_root"]:
             if os.geteuid() != 0:
@@ -54,9 +53,6 @@ def main():
                 eggroot.containers.Locales.locale_general().print_in_lang("custom_modal", "not_admin_desc_modal",),
                 eggroot.general.type_event.type_event.INFO)
                 sys.exit(1)
-        # initialisation des threads GTK
-        # GObject.threads_init()
-        # Gdk.threads_init()
         app = eggroot.containers.GraphicGui.welcome_win_gtk()
     else:
         if not config_general["lunch_without_root"]:

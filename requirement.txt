@@ -2,6 +2,7 @@ python3 dev
 sudo dnf install python3-devel
 
 pip3 install dependency_injector
+pip3 install geoip
 
 find ./locales -name "*.po" | while read f; do msgfmt3.py -o ${f%.po}.mo $f; done
 

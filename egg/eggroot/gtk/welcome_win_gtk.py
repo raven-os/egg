@@ -1,7 +1,8 @@
 import eggroot.containers
+import threading
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, GdkPixbuf
+from gi.repository import Gdk, GObject, Gtk, GLib, GdkPixbuf
 
 from eggroot.interfaces.welcome_win_interface import welcome_win_interface
 
@@ -9,7 +10,7 @@ from eggroot.interfaces.welcome_win_interface import welcome_win_interface
 from eggroot.gtk.pages.language_live_page_gtk import language_live_page_gtk
 from eggroot.gtk.pages.language_installation_page_gtk import language_installation_page_gtk
 
-
+# select_row
 class FancyLabel(Gtk.Label):
 
     page_id = None
@@ -27,14 +28,6 @@ class FancyLabel(Gtk.Label):
 class Handler:
     def onDestroy(self, *args):
         Gtk.main_quit()
-
-    def onChangToFr(self, button, *data):
-        data[1].change_language_all_files('fr')
-        data[0].load_lang()
-
-    def onChangToEn(self, button, *data):
-        data[1].change_language_all_files('en')
-        data[0].load_lang()
 
 class Components():
     def __init__(self, builder):
@@ -56,45 +49,43 @@ class Components():
 class welcome_win_gtk(welcome_win_interface):
 
     def __init__(self, language_manager, config_general, config_main_window):
+        GObject.threads_init()
+        Gdk.threads_init()
+
         self._config_main_window = config_main_window
         self._config_general = config_general
         self._pages = list()
         self._page_index = 0
         self._lang_manager = language_manager
-        self._lang_manager.change_language_all_files('fr')
         self._builder = Gtk.Builder()
         self._builder.add_from_file(self._config_main_window["window_xml_file"])
 
         self._builder.connect_signals(
         {
             'onDestroy': (Handler().onDestroy),
-            'onButtonExit': (Handler().onDestroy),
-            'onChangToFr': (Handler().onChangToFr, self, language_manager),
-            'onChangToEn': (Handler().onChangToEn, self, language_manager)
+            'onButtonExit': (Handler().onDestroy)
         })
 
         # allcomponents = self._builder.get_objects()
         self.init_window()
-        self.load_lang()
         self.set_full_screen_win()
         self.set_scroll_left()
         self.set_theme()
         self.register_all_window()
+        self.load_lang()
         self.update_current_page()
         self.set_button_action()
         self._component.get_component("welcome_win").show_all()
+       
+        GLib.idle_add(self.start_threads)
 
     # init config
     def init_window(self):
         self._component = Components(self._builder)
         self._component.load_component_main_window(self._config_main_window)
-
-        self._component.get_component("welcome_win").set_title(self._lang_manager.print_in_lang('welcome_win', 'title'))
-  
+        self._component.get_component("welcome_win").set_title(self._config_general["os_name"])
         self._component.get_component("welcome_win_left_bot_label").set_label("")
         self._component.get_component("welcome_win_left_bot_logo").set_from_file(self._config_main_window["window_logo_bot_path"])
-
-        self.set_title("Hello")
 
     def set_full_screen_win(self):
         if self._config_main_window["window_fullscreen"]:
@@ -121,44 +112,40 @@ class welcome_win_gtk(welcome_win_interface):
         
     # manage other window
     def register_all_window(self):
-        self.add_installer_page(eggroot.containers.GraphicGui.language_installation_page_gtk())
-        self.add_installer_page(eggroot.containers.GraphicGui.language_live_page_gtk())
-        # self.add_installer_page(InstallerLocationPage())
-        # self.add_installer_page(InstallerGeoipPage())
-        # self.add_installer_page(InstallerKeyboardPage())
-        # self.add_installer_page(InstallerTimezonePage())
-        # self.add_installer_page(InstallerDiskLocationPage())
-        # self.add_installer_page(InstallerPartitioningPage())
-        # self.add_installer_page(InstallerSystemPage())
-        # self.add_installer_page(InstallerUsersPage())
-        # self.add_installer_page(InstallerSummaryPage(self.plasma))
-        # self.add_installer_page(InstallerProgressPage())
-        # self.add_installer_page(InstallationCompletePage())
+        all_pages = list()
+
+        all_pages.append(eggroot.containers.GraphicGui.language_live_page_gtk())
+        all_pages.append(eggroot.containers.GraphicGui.language_installation_page_gtk())
+        
+        for current_page in all_pages:
+            current_page.load_win(self)
+            self.add_installer_page(current_page)
 
     def load_lang(self):
-        pass
-        # buttonclick = self._builder.get_object("button1")
-        # buttonclick.set_label('click')
+        component = self._component.get_component("welcome_win_welcome_left_list_text_box")
+        for label in component.get_children():
+            component.remove(label)
+
+        for current_page in self._pages:
+            lab = FancyLabel(current_page)
+            if lab.page_id == self._pages[self._page_index].get_name():
+                lab.get_style_context().remove_class("dim-label")
+            else:
+                lab.get_style_context().add_class("dim-label")
+            self._component.get_component("welcome_win_welcome_left_list_text_box").pack_start(lab, False, False, 0)
+            current_page.refresh_ui_language()
+        self._component.get_component("welcome_win_welcome_left_list_text_box").show_all()
         
-        # button_fr = self._builder.get_object("chang_fr")
-        # button_fr.set_label(self._lang_manager.print_in_lang('welcome_win', 'lang_fr_button'))
+        self.set_title(self._pages[self._page_index].get_title())
+        self._component.get_component("welcome_win_welcome_right_header_quit_btn").set_label(self._lang_manager.print_in_lang('welcome_win', 'top_right_quit_btn'))
+        self._component.get_component("welcome_win_prev_btn").set_label(self._lang_manager.print_in_lang('welcome_win', 'bot_right_prev_btn'))
 
-        # button_us = self._builder.get_object("chang_en")
-        # button_us.set_label(self._lang_manager.print_in_lang('welcome_win', 'lang_en_button'))
-
-        # current_lang_label = self._builder.get_object("lang")
-        # current_lang_label.set_label(self._lang_manager.print_in_lang('welcome_win', 'current_lang'))
-
-
-
-
-
-
+        component = self._component.get_component("welcome_win_next_btn")
+        component.set_label(self._lang_manager.print_in_lang('welcome_win', 'bot_right_next_btn'))
 
     def add_installer_page(self, page):
         """ Work a page into the set """
-        # checker si pas besoin ID après
-        # self._component.get_component("welcome_win_welcome_right_stack").add_named(page, page.get_name())
+        self._component.get_component("welcome_win_welcome_right_stack").add_named(page, page.get_name())
         lab = FancyLabel(page)
         self._component.get_component("welcome_win_welcome_left_list_text_box").pack_start(lab, False, False, 0)
         self._pages.append(page)
@@ -201,6 +188,7 @@ class welcome_win_gtk(welcome_win_interface):
         self.update_current_page()
 
     def update_current_page(self):
+        self.set_title(self._pages[self._page_index].get_title())
         page = self._pages[self._page_index]
         self.set_final_step(False)
 
@@ -212,7 +200,9 @@ class welcome_win_gtk(welcome_win_interface):
             self.set_can_previous(False)
         else:
             self.set_can_previous(True)
-        # page.prepare(self.info)
+
+        # HERE Envoie d'info mais vide donc changer dans installationpage avec configloader
+        page.prepare()
 
         for label in self._component.get_component("welcome_win_welcome_left_list_text_box").get_children():
             if label.page_id == page.get_name():
@@ -226,9 +216,13 @@ class welcome_win_gtk(welcome_win_interface):
         self._component.get_component("welcome_win_welcome_right_stack").set_visible_child_name(page.get_name())
 
     def set_can_previous(self, can_prev):
+        if self._page_index == 0:
+            can_prev = False
         self._component.get_component("welcome_win_prev_btn").set_sensitive(can_prev)
 
     def set_can_next(self, can_next):
+        if self._page_index == len(self._pages) - 1:
+            can_next = False
         self._component.get_component("welcome_win_next_btn").set_sensitive(can_next)
 
     def set_final_step(self, final):
@@ -252,6 +246,8 @@ class welcome_win_gtk(welcome_win_interface):
             self._component.get_component("welcome_win_next_btn").show_all()
             # self.set_deletable(True)
 
+    def skip_page(self):
+        GLib.idle_add(self._skip_page)
 
     def _skip_page(self):
         """ Allow pages to request skipping to next page """
@@ -259,6 +255,22 @@ class welcome_win_gtk(welcome_win_interface):
             self.next_page()
         else:
             self.prev_page()
+        return False
+
+    def perform_inits(self):
+        """ Force expensive children to init outside main thread """
+        # here expensive task load window
+        for page in self._pages:
+            try:
+                page.do_expensive_init()
+            except Exception as e:
+                print("Fatal exception initialising: {}".format(e))
+
+    def start_threads(self):
+        self.set_can_next(False)
+        start_thr = threading.Thread(target=self.perform_inits)
+        start_thr.daemon = True
+        start_thr.start()
         return False
 
     def lunch(self):

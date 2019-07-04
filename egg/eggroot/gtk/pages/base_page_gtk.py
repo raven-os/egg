@@ -7,17 +7,14 @@ class BasePageGtk(Gtk.Box):
     def __init__(self):
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.VERTICAL, spacing=0)
 
-        mk = u"<span font-size='x-large'>{}</span>".format("zizi")
-        lab = Gtk.Label.new(mk)
-        lab.set_property("margin-top", 10)
-        lab.set_property("margin-start", 20)
-        lab.set_property("margin-bottom", 10)
-        lab.set_use_markup(True)
-        lab.set_halign(Gtk.Align.START)
-        self.pack_start(lab, False, False, 0)
+    def refresh_ui_language(self):
+        pass
 
-        sep = Gtk.Separator.new(Gtk.Orientation.HORIZONTAL)
-        self.pack_start(sep, False, False, 0)
+    def load_win(self, win):
+        pass
+
+    def get_title(self):
+        return None
 
     def get_sidebar_title(self):
         return "Not implemented.."
@@ -31,7 +28,7 @@ class BasePageGtk(Gtk.Box):
     def get_primary_answer(self):
         return None
 
-    def prepare(self, info):
+    def prepare(self):
         pass
 
     def seed(self, setup):

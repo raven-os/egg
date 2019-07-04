@@ -1,6 +1,3 @@
-msgid "title"
-msgstr ""
-
 msgid "current_lang"
 msgstr ""
 
@@ -8,4 +5,13 @@ msgid "lang_fr_button"
 msgstr ""
 
 msgid "lang_en_button"
+msgstr ""
+
+msgid "top_right_quit_btn"
+msgstr ""
+
+msgid "bot_right_prev_btn"
+msgstr ""
+
+msgid "bot_right_next_btn"
 msgstr ""

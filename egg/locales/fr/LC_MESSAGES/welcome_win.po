@@ -1,6 +1,3 @@
-msgid "title"
-msgstr "Bonjour"
-
 msgid "current_lang"
 msgstr "Vous avez la fenetre en francais"
 
@@ -9,3 +6,12 @@ msgstr "Francais"
 
 msgid "lang_en_button"
 msgstr "Anglais"
+
+msgid "top_right_quit_btn"
+msgstr "quitter"
+
+msgid "bot_right_prev_btn"
+msgstr "precedant"
+
+msgid "bot_right_next_btn"
+msgstr "suivant"

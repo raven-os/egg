@@ -1,0 +1,14 @@
+msgid "title"
+msgstr "Configuration de langue pour le systeme"
+
+msgid "sidebar_title"
+msgstr "Langage installe sur le systeme"
+
+msgid "desc_language"
+msgstr "Langue:"
+
+msgid "desc_keyboard"
+msgstr "Clavier:"
+
+msgid "input_keyboard"
+msgstr "Essayez le clavier ici"
