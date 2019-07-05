@@ -26,7 +26,6 @@ class timezone_page_gtk(BasePageGtk):
     timeout = 10
     _components = None
 
-
     def __init__(self, language_manager, config_general):
         BasePageGtk.__init__(self)
 
@@ -63,7 +62,7 @@ class timezone_page_gtk(BasePageGtk):
         self._win_parent = win
 
     def refresh_ui_language(self):
-        self._components.get_component("city_entry").set_placeholder_text("Search for your timezone" + u"…")
+        self._components.get_component("city_entry").set_placeholder_text(self._language_manager.print_in_lang("timezone_page", "timezone_placeholder_search_entry") + u"…")
 
     def do_expensive_init(self):
         # Set up timezone database
@@ -96,7 +95,6 @@ class timezone_page_gtk(BasePageGtk):
         self._components.get_component("tz_map").set_watermark(self.timezone_human)
         self._components.get_component("city_entry").set_text(nice_loc.human_zone)
 
-        # Ok to go forward
         self._win_parent.set_can_next(True)
         self._config_general["timezone_page"]["timezone_zone"] = zone
         self._config_general["timezone_page"]["timezone_country"] = location.get_property("country")
@@ -135,9 +133,6 @@ class timezone_page_gtk(BasePageGtk):
         except Exception as e:
             print(e)
         return None
-
-    def end_thread(self):
-        return False
 
     def perform_lookup(self):
         """ Perform the actual lookup """
