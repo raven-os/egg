@@ -17,7 +17,7 @@ class BasePageGtk(Gtk.Box):
         return None
 
     def get_sidebar_title(self):
-        return "Not implemented.."
+        return None
 
     def get_name(self):
         return None

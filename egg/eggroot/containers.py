@@ -10,6 +10,7 @@ from eggroot.gtk.welcome_win_gtk import welcome_win_gtk
     # pages
 from eggroot.gtk.pages.language_live_page_gtk import language_live_page_gtk
 from eggroot.gtk.pages.language_installation_page_gtk import language_installation_page_gtk
+from eggroot.gtk.pages.timezone_page_gtk import timezone_page_gtk
 
 # ncurses
 from eggroot.ncurses.welcome_win_ncurses import welcome_win_ncurses
@@ -29,7 +30,7 @@ class GraphicGui(containers.DeclarativeContainer):
     welcome_win_gtk = providers.Singleton(welcome_win_gtk, Locales.locale_general, Configs.config, Configs.config_main_window_page)
     language_live_page_gtk = providers.Factory(language_live_page_gtk, Locales.locale_general, Configs.config)
     language_installation_page_gtk = providers.Factory(language_installation_page_gtk, Locales.locale_general, Configs.config)
-
+    timezone_page_gtk = providers.Factory(timezone_page_gtk, Locales.locale_general, Configs.config)
 
     welcome_win_ncurses = providers.Singleton(welcome_win_ncurses, Locales.locale_general, Configs.config, Configs.config_main_window_page)
     # custom_modal_ncurses = providers.Singleton(custom_modal_ncurses, Locales.locale_general)

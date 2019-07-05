@@ -1,0 +1,8 @@
+msgid "title"
+msgstr "Configure the timezone"
+
+msgid "sidebar_title"
+msgstr "Choose the timezone"
+
+msgid "timezone_placeholder_search_entry"
+msgstr "Search the correct timezone"

@@ -116,7 +116,7 @@ class welcome_win_gtk(welcome_win_interface):
 
         all_pages.append(eggroot.containers.GraphicGui.language_live_page_gtk())
         all_pages.append(eggroot.containers.GraphicGui.language_installation_page_gtk())
-        
+        all_pages.append(eggroot.containers.GraphicGui.timezone_page_gtk())
         for current_page in all_pages:
             current_page.load_win(self)
             self.add_installer_page(current_page)
