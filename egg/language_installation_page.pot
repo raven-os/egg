@@ -1,0 +1,14 @@
+msgid "title"
+msgstr ""
+
+msgid "sidebar_title"
+msgstr ""
+
+msgid "desc_language"
+msgstr ""
+
+msgid "desc_keyboard"
+msgstr ""
+
+msgid "input_keyboard"
+msgstr ""
