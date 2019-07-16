@@ -1,0 +1,8 @@
+msgid "title"
+msgstr ""
+
+msgid "sidebar_title"
+msgstr ""
+
+msgid "timezone_placeholder_search_entry"
+msgstr ""

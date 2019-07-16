@@ -1,0 +1,9 @@
+python3 dev
+python3-devel
+pip3 install dependency_injector
+pip3 install geoip2
+
+find ./locales -name "*.po" | while read f; do msgfmt3.py -o ${f%.po}.mo $f; done
+compile po file to .mo
+msgfmt3.py -o win1.mo win1
+libparted

@@ -1,0 +1,8 @@
+msgid "title"
+msgstr "Configurer le fuseau horaire"
+
+msgid "sidebar_title"
+msgstr "Choisir le fuseau horaire"
+
+msgid "timezone_placeholder_search_entry"
+msgstr "Rechercher le fuseau horaire correcte"
