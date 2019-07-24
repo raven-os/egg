@@ -125,3 +125,6 @@ dmypy.json
 # Custom
 *~
 *_dev.json
+.idea/
+.vscode/
+

@@ -1,0 +1,19 @@
+{
+    "window_xml_file": "./gtk_gui/xml/welcome_window.glade",
+    "window_size_x": "700",
+    "window_size_y": "500",
+    "window_fullscreen": true,
+    "window_logo_bot_path": "./img/raven_title_white.png",
+    "window_list_components": [
+        "welcome_window",
+        "welcome_window_prev_btn",
+        "welcome_window_next_btn",
+        "welcome_window_left_top_logo",
+        "welcome_window_left_bot_logo",
+        "welcome_window_left_bot_label",
+        "welcome_window_right_header_label",
+        "welcome_window_left_list_text_box",
+        "welcome_window_right_header_quit_btn",
+        "welcome_window_right_stack"
+    ]
+}

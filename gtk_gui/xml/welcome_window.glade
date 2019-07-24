@@ -87,6 +87,27 @@
             <child>
               <placeholder/>
             </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -97,7 +118,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkApplicationWindow" id="welcome_win">
+  <object class="GtkApplicationWindow" id="welcome_window">
     <property name="can_focus">False</property>
     <property name="window_position">center-always</property>
     <property name="default_width">768</property>
@@ -107,18 +128,18 @@
       <placeholder/>
     </child>
     <child>
-      <object class="GtkBox" id="welcome_win_wrapper">
+      <object class="GtkBox" id="welcome_window_wrapper">
         <property name="name">window</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkBox" id="welcome_win_welcome_left_box">
+          <object class="GtkBox" id="welcome_window_left_box">
             <property name="width_request">210</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkImage" id="welcome_win_left_top_logo">
+              <object class="GtkImage" id="welcome_window_left_top_logo">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">8</property>
@@ -134,7 +155,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="welcome_win_welcome_left_list_text_box">
+              <object class="GtkBox" id="welcome_window_left_list_text_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_top">20</property>
@@ -187,7 +208,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="welcome_win_left_bot_label">
+              <object class="GtkLabel" id="welcome_window_left_bot_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">label</property>
@@ -200,7 +221,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkImage" id="welcome_win_left_bot_logo">
+              <object class="GtkImage" id="welcome_window_left_bot_logo">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="stock">gtk-missing-image</property>
@@ -220,7 +241,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkSeparator" id="welcome_win_left_separator">
+          <object class="GtkSeparator" id="welcome_window_left_separator">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>
@@ -231,18 +252,18 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="welcome_win_welcome_right_box">
+          <object class="GtkBox" id="welcome_window_right_box">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="hexpand">True</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkBox" id="welcome_win_welcome_right_top_box">
+              <object class="GtkBox" id="welcome_window_right_top_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="vexpand">False</property>
                 <child>
-                  <object class="GtkLabel" id="welcome_win_welcome_right_header_label">
+                  <object class="GtkLabel" id="welcome_window_right_header_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
@@ -259,7 +280,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="welcome_win_welcome_right_header_quit_btn">
+                  <object class="GtkButton" id="welcome_window_right_header_quit_btn">
                     <property name="label" translatable="yes">quit</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -286,7 +307,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSeparator" id="welcome_win_welcome_right_top_sep">
+              <object class="GtkSeparator" id="welcome_window_right_top_sep">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
               </object>
@@ -297,7 +318,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkStack" id="welcome_win_welcome_right_stack">
+              <object class="GtkStack" id="welcome_window_right_stack">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="vexpand">True</property>
@@ -312,7 +333,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSeparator" id="welcome_win_welcome_right_bot_sep">
+              <object class="GtkSeparator" id="welcome_window_right_bot_sep">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
               </object>
@@ -323,14 +344,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="welcome_win_welcome_right_bot_box">
+              <object class="GtkBox" id="welcome_window_right_bot_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
                   <placeholder/>
                 </child>
                 <child>
-                  <object class="GtkGrid" id="welcome_win_welcome_right_bot_nav_grid">
+                  <object class="GtkGrid" id="welcome_window_right_bot_nav_grid">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">end</property>
@@ -340,7 +361,7 @@
                     <property name="margin_bottom">10</property>
                     <property name="column_spacing">4</property>
                     <child>
-                      <object class="GtkButton" id="welcome_win_next_btn">
+                      <object class="GtkButton" id="welcome_window_next_btn">
                         <property name="label" translatable="yes">next</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -353,7 +374,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="welcome_win_prev_btn">
+                      <object class="GtkButton" id="welcome_window_prev_btn">
                         <property name="label" translatable="yes">previous</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
