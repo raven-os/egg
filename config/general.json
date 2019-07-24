@@ -1,7 +1,7 @@
 {
     "os_name": "Raven-OS",
     "url_check_ip": "http://ip-api.com/json/?fields=status,countryCode,timezone,query",
-    "lunch_without_root": false,
+    "launch_without_root": false,
     "default_language_code": "fr",
     "locales_folder": "./locales",
     "config_page": {
