@@ -1,0 +1,10 @@
+msgid ''
+msgstr ''
+'Content-Type: text/plain; charset=UTF-8\n'
+'X-Poedit-SourceCharset: UTF-8\n'
+
+msgid 'not_admin_title_modal'
+msgstr "User is not root"
+
+msgid 'not_admin_desc_modal'
+msgstr "Please run the program with the user root"

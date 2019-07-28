@@ -7,16 +7,20 @@
     "config_page": {
         "language_live": {
             "id": "language_live",
-            "icon": "./img/ico/page1.png"
+            "icon": "./ui/gtk/img/ico/page1.png"
         },
         "language_installation": {
             "id": "language_installation",
-            "icon": "./img/ico/page2.png"
+            "icon": "./ui/gtk/img/ico/page2.png"
         },
         "timezone": {
             "id": "timezone",
-            "icon": "./img/ico/page3.png"
+            "icon": "./ui/gtk/img/ico/page3.png"
+        },
+        "selection_disk": {
+            "id": "selection_disk",
+            "icon": "./ui/gtk/img/ico/page4.png"
         }
     },
-    "language_files": ["welcome_win", "custom_modal", "language_live_page", "language_installation_page", "timezone_page"]
+    "language_files": ["main_window", "popup", "language_live_page", "language_installation_page", "timezone_page"]
 }

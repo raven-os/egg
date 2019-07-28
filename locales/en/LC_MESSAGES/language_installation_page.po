@@ -1,14 +1,19 @@
-msgid "title"
+msgid ''
+msgstr ''
+'Content-Type: text/plain; charset=UTF-8\n'
+'X-Poedit-SourceCharset: UTF-8\n'
+
+msgid 'title'
 msgstr "Language configuration on the system"
 
-msgid "sidebar_title"
+msgid 'sidebar_title'
 msgstr "Language install on the system"
 
-msgid "desc_language"
+msgid 'desc_language'
 msgstr "Language:"
 
-msgid "desc_keyboard"
+msgid 'desc_keyboard'
 msgstr "Keyboard:"
 
-msgid "input_keyboard"
+msgid 'input_keyboard'
 msgstr "Try the keyboard here"
