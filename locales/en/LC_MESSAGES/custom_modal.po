@@ -1,5 +1,0 @@
-msgid "not_admin_title_modal"
-msgstr "User is not root"
-
-msgid "not_admin_desc_modal"
-msgstr "Please run the program with the user root"

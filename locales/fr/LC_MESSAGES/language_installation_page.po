@@ -1,8 +1,13 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
 msgid "title"
-msgstr "Configuration de langue pour le systeme"
+msgstr "Configuration de langue pour le système"
 
 msgid "sidebar_title"
-msgstr "Langage installe sur le systeme"
+msgstr "Langage installé sur le système"
 
 msgid "desc_language"
 msgstr "Langue:"

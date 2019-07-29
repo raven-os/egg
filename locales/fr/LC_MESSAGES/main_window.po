@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "current_lang"
+msgstr "Vous avez la fenêtre en français"
+
+msgid "lang_fr_button"
+msgstr "Français"
+
+msgid "lang_en_button"
+msgstr "Anglais"
+
+msgid "top_right_quit_btn"
+msgstr "quitter"
+
+msgid "bot_right_prev_btn"
+msgstr "précédent"
+
+msgid "bot_right_next_btn"
+msgstr "suivant"

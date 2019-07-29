@@ -1,3 +1,8 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
 msgid "title"
 msgstr "Configuration de langue du CD autonomne"
 
@@ -14,7 +19,7 @@ msgid "input_keyboard"
 msgstr "Essayez le clavier ici"
 
 msgid "french"
-msgstr "francais"
+msgstr "français"
 
 msgid "english"
 msgstr "anglais"
