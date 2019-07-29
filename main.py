@@ -7,13 +7,13 @@ from egg.app import App
 from egg.containers import Configs, Locales
 from egg.type_event import TypeEvent
 
-import importlib
+gtk_found = False
 
-gdk = importlib.util.find_spec(name='gi')
-gdk_found = gdk is not None
-
-if gdk_found:
+try:
     from ui.gtk.app import GtkApp
+    gtk_found = True
+except (ValueError, ImportError):
+    pass
 
 
 def load_lang_files(locale_general, config_general):
@@ -62,13 +62,13 @@ def main():
     load_lang_files(Locales.locale_general(), config_general)
 
     ui_app = App()
-    if gdk_found:
+    if gtk_found:
         ui_app = GtkApp()
 
     if not config_general['launch_without_root']:
         if os.geteuid() != 0:
-            ui_app.display_popup(Locales.locale_general().translate_msg('popup', 'not_admin_title_modal'),
-                                 Locales.locale_general().translate_msg('popup', 'not_admin_desc_modal'),
+            ui_app.display_popup(Locales.locale_general().translate_msg('popup', 'not_admin_title_popup'),
+                                 Locales.locale_general().translate_msg('popup', 'not_admin_desc_popup'),
                                  TypeEvent.INFO)
             sys.exit(1)
     ui_app.launch()
