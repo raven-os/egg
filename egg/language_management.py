@@ -17,7 +17,7 @@ class LanguageManagement(object):
         self.detailed_languages = {'en': 'en_US', 'fr': 'fr_FR'}
         self.translater = {}
 
-        if lang is not None and file is not None and self.locales_folder is not None:
+        if file is not None and self.locales_folder is not None:
             self.translater[file] = gettext.translation(
                 domain=file, localedir=self.locales_folder,
                 fallback=True, languages=[lang])

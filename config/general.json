@@ -1,26 +1,7 @@
 {
     "os_name": "Raven-OS",
-    "url_check_ip": "http://ip-api.com/json/?fields=status,countryCode,timezone,query",
     "launch_without_root": false,
     "default_language_code": "fr",
     "locales_folder": "./locales",
-    "config_page": {
-        "language_live": {
-            "id": "language_live",
-            "icon": "./ui/gtk/img/ico/page1.png"
-        },
-        "language_installation": {
-            "id": "language_installation",
-            "icon": "./ui/gtk/img/ico/page2.png"
-        },
-        "timezone": {
-            "id": "timezone",
-            "icon": "./ui/gtk/img/ico/page3.png"
-        },
-        "selection_disk": {
-            "id": "selection_disk",
-            "icon": "./ui/gtk/img/ico/page4.png"
-        }
-    },
-    "language_files": ["main_window", "popup", "language_live_page", "language_installation_page", "timezone_page"]
+    "language_files": ["main_window", "popup", "general"]
 }
