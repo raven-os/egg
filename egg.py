@@ -64,6 +64,9 @@ def main():
     ui_app = App()
     if gtk_found:
         ui_app = GtkApp()
+    else:
+        print(Locales.locale_general().translate_msg('general', 'no_ui_found'))
+        sys.exit(1)
 
     if not config_general['launch_without_root']:
         if os.geteuid() != 0:

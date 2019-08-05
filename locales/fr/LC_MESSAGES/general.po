@@ -1,0 +1,7 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "no_ui_found"
+msgstr "Aucune librairie d'interface utilisateur prise en charge n’est installée sur votre système."

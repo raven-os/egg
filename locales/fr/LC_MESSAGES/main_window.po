@@ -13,10 +13,10 @@ msgid "lang_en_button"
 msgstr "Anglais"
 
 msgid "top_right_quit_btn"
-msgstr "quitter"
+msgstr "Quitter"
 
 msgid "bot_right_prev_btn"
-msgstr "précédent"
+msgstr "Précédent"
 
 msgid "bot_right_next_btn"
-msgstr "suivant"
+msgstr "Suivant"
