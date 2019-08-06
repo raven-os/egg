@@ -6,6 +6,7 @@ import sys
 from egg.app import App
 from egg.containers import Configs, Locales
 from egg.type_event import TypeEvent
+from egg.language_management import LanguageManagement
 
 gtk_found = False
 
@@ -16,14 +17,14 @@ except (ValueError, ImportError):
     pass
 
 
-def load_lang_files(locale_general, config_general):
+def load_lang_files(locale_general: LanguageManagement, config_general: dict) -> None:
     locale_general.locales_folder = config_general['locales_folder']
     locale_general.change_language_all_files(config_general['default_language_code'])
     for current_language_file in config_general['language_files']:
         locale_general.change_language_file(locale_general.current_language, current_language_file)
 
 
-def load_config_from_files(config_files):
+def load_config_from_files(config_files: dict) -> dict:
     config_files_path = {}
     prefix_path = './'
     prefix_path_dev = os.getcwd() + '/'
@@ -41,9 +42,8 @@ def load_config_from_files(config_files):
     return config_files_path
 
 
-def load_config_files():
+def load_config_files() -> None:
     config_files = {'general': 'general', 'main_window': 'main_window'}
-
     config_files_path = load_config_from_files(config_files)
 
     with open(config_files_path['general'], 'r') as datafile:
@@ -55,7 +55,7 @@ def load_config_files():
         Configs.main_window.override(config)
 
 
-def main():
+def main() -> None:
     load_config_files()
 
     config_general = Configs.general()

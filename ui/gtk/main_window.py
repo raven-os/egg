@@ -3,33 +3,34 @@ import gi
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gdk, GObject, Gtk, GdkPixbuf
+from egg.language_management import LanguageManagement
 
 
 class Handler:
     @staticmethod
-    def on_destroy(*args):
+    def on_destroy(widget: GObject.Object) -> None:
         Gtk.main_quit()
 
 
 class Components:
-    def __init__(self, builder):
-        self._allComponents = {}
+    def __init__(self, builder: Gtk.Builder) -> None:
+        self._all_components = {}
         self._builder = builder
 
-    def load_component_main_window(self, config):
+    def load_component_main_window(self, config: dict) -> None:
         for component_name in config['window_list_components']:
-            self._allComponents[component_name] = self._builder.get_object(component_name)
+            self._all_components[component_name] = self._builder.get_object(component_name)
 
-    def set_component(self, component_name, component):
-        self._allComponents[component_name] = component
+    def set_component(self, component_name: str, component: GObject.Object) -> None:
+        self._all_components[component_name] = component
 
-    def get_component(self, component_name):
-        return self._allComponents[component_name]
+    def get_component(self, component_name: str) -> None:
+        return self._all_components[component_name]
 
 
 class MainWindowGtk:
 
-    def __init__(self, language_manager, config_general, config_main_window):
+    def __init__(self, language_manager: LanguageManagement, config_general: dict, config_main_window: dict) -> None:
         GObject.threads_init()
         Gdk.threads_init()
 
@@ -64,10 +65,10 @@ class MainWindowGtk:
         self._settings.set_property('gtk-application-prefer-dark-theme', True)
         self._component.get_component('main_window').show_all()
 
-    def set_title(self, message):
+    def set_title(self, message: str) -> None:
         self._component.get_component('main_window_header_right_label').set_halign(Gtk.Align.START)
         self._component.get_component('main_window_header_right_label').set_label(
             u'<span font-size=\'x-large\'>{}</span>'.format(message))
 
-    def launch(self):
+    def launch(self) -> None:
         Gtk.main()
