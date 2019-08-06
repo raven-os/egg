@@ -8,12 +8,12 @@ from egg.type_event import TypeEvent
 
 class PopupGtk:
 
-    def __init__(self, title, msg, event_type):
+    def __init__(self, title: str, msg: str, event_type: TypeEvent) -> None:
         self._title = title
         self._msg = msg
         self._event_type = event_type
 
-    def launch(self):
+    def launch(self) -> None:
         gtk_type = Gtk.MessageType.OTHER
 
         if self._event_type == TypeEvent.INFO:
