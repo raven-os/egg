@@ -4,7 +4,6 @@ import os
 import sys
 
 from egg.app import App
-from egg.containers import Configs, Locales
 from egg.type_event import TypeEvent
 from egg.language_management import LanguageManagement
 
@@ -42,36 +41,37 @@ def load_config_from_files(config_files: dict) -> dict:
     return config_files_path
 
 
-def load_config_files() -> None:
+def load_config_files() -> (dict, dict):
+    config_general = None
+    config_main_window = None
     config_files = {'general': 'general', 'main_window': 'main_window'}
     config_files_path = load_config_from_files(config_files)
 
     with open(config_files_path['general'], 'r') as datafile:
-        config = json.load(datafile)
-        Configs.general.override(config)
+        config_general = json.load(datafile)
 
     with open(config_files_path['main_window'], 'r') as datafile:
-        config = json.load(datafile)
-        Configs.main_window.override(config)
+        config_main_window = json.load(datafile)
+    
+    return config_general, config_main_window
 
 
 def main() -> None:
-    load_config_files()
-
-    config_general = Configs.general()
-    load_lang_files(Locales.locale_general(), config_general)
+    config_general, config_main_window = load_config_files()
+    locale_general = LanguageManagement(config_general, None)
+    load_lang_files(locale_general, config_general)
 
     ui_app = App()
     if gtk_found:
-        ui_app = GtkApp()
+        ui_app = GtkApp(locale_general, config_general, config_main_window)
     else:
-        print(Locales.locale_general().translate_msg('general', 'no_ui_found'))
+        print(locale_general.translate_msg('general', 'no_ui_found'))
         sys.exit(1)
 
     if not config_general['launch_without_root']:
         if os.geteuid() != 0:
-            ui_app.display_popup(Locales.locale_general().translate_msg('popup', 'not_admin_title_popup'),
-                                 Locales.locale_general().translate_msg('popup', 'not_admin_desc_popup'),
+            ui_app.display_popup(locale_general.translate_msg('popup', 'not_admin_title_popup'),
+                                 locale_general.translate_msg('popup', 'not_admin_desc_popup'),
                                  TypeEvent.INFO)
             sys.exit(1)
     ui_app.launch()
