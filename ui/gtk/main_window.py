@@ -30,16 +30,16 @@ class Components:
 
 class MainWindowGtk:
 
-    def __init__(self, language_manager: LanguageManagement, config_general: dict, config_main_window: dict) -> None:
+    def __init__(self, locale_general: LanguageManagement, config_general: dict, config_main_window: dict) -> None:
         GObject.threads_init()
         Gdk.threads_init()
 
-        self._settings = Gtk.Settings.get_default()
-        self._config_main_window = config_main_window
+        self._locale_general = locale_general
         self._config_general = config_general
+        self._config_main_window = config_main_window
+        self._settings = Gtk.Settings.get_default()
         self._pages = list()
         self._page_index = 0
-        self._lang_manager = language_manager
         self._builder = Gtk.Builder()
         self._builder.add_from_file(self._config_main_window['window_xml_file'])
 
