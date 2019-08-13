@@ -1,0 +1,19 @@
+{
+    "window_xml_file": "./ui/gtk/glade/main_window.glade",
+    "window_size_x": "1000",
+    "window_size_y": "600",
+    "window_fullscreen": false,
+    "window_logo_bot_path": "./ui/gtk/img/raven_title_white.png",
+    "window_list_components": [
+        "main_window",
+        "main_window_prev_btn",
+        "main_window_next_btn",
+        "main_window_top_left_logo",
+        "main_window_bot_left_logo",
+        "main_window_bot_left_label",
+        "main_window_header_right_label",
+        "main_window_left_list_text_box",
+        "main_window_header_right_quit_btn",
+        "main_window_right_stack"
+    ]
+}

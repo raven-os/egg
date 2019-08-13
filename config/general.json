@@ -1,0 +1,7 @@
+{
+    "os_name": "Raven-OS",
+    "launch_without_root": false,
+    "default_language_code": "fr",
+    "locales_folder": "./locales",
+    "language_files": ["main_window", "popup", "general"]
+}
