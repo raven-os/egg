@@ -1,4 +1,5 @@
 {
   "model": "Loopback device",
-  "size": 536870912
+  "size": 536870912,
+  "number_of_partition": 4
 }
