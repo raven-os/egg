@@ -6,19 +6,27 @@
   "partitions": [
     {
       "size": 204800,
-      "filesystem": "ext4"
+      "filesystem": "ext4",
+      "start": 2048,
+      "end": 206847
     },
     {
       "size": 86016,
-      "filesystem": "ext2"
+      "filesystem": "ext2",
+      "start": 206848,
+      "end": 292863
     },
     {
       "size": 512000,
-      "filesystem": "fat32"
+      "filesystem": "fat32",
+      "start": 292864,
+      "end": 804863
     },
     {
       "size": 243679,
-      "filesystem": "linux-swap(v1)"
+      "filesystem": "linux-swap(v1)",
+      "start": 804864,
+      "end": 1048542
     }
   ]
 }

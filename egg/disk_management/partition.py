@@ -14,3 +14,9 @@ class Partition(object):
 
     def get_filesystem(self) -> parted.FileSystem:
         return self.rawPartition.fileSystem
+
+    def get_start(self) -> int:
+        return self.rawPartition.geometry.start
+
+    def get_end(self) -> int:
+        return self.rawPartition.geometry.end

@@ -40,6 +40,9 @@ class TestDiskRead(unittest.TestCase):
             with self.subTest(partitions[i]):
                 self.assertEqual(partitions[i].get_capacity(), partitions_expected[i].get('size'))
                 self.assertEqual(partitions[i].get_filesystem().type, partitions_expected[i].get('filesystem'))
+                self.assertEqual(partitions[i].get_path(), self.loop_path + 'p' + str(i + 1))
+                self.assertEqual(partitions[i].get_start(), partitions_expected[i].get('start'))
+                self.assertEqual(partitions[i].get_end(), partitions_expected[i].get('end'))
 
     @classmethod
     def tearDownClass(cls) -> None:
