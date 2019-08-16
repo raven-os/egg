@@ -12,7 +12,7 @@ class Disk(object):
             self.device: parted.Device = parted.getDevice(device_path)
         else:
             raise parted.DiskException("no device specified")
-        self.disk: Disk = parted.newDisk(self.device)
+        self.disk: parted.Disk = parted.newDisk(self.device)
         self.partitions: list = list(map(lambda x: Partition(x), self.disk.partitions))
 
     def __del__(self) -> None:
@@ -20,6 +20,9 @@ class Disk(object):
 
     def get_model(self) -> str:
         return self.device.model.__str__()
+
+    def get_type(self) -> str:
+        return self.disk.type
 
     def get_capacity(self) -> int:
         return self.device.getLength() * self.device.sectorSize

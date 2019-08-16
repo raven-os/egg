@@ -25,6 +25,7 @@ class TestDiskRead(unittest.TestCase):
     def test_disk(self) -> None:
         disk = egg.disk_management.get_disk(self.loop_path)
         self.assertEqual(disk.get_model(), self.expected.get('model'))
+        self.assertEqual(disk.get_type(), self.expected.get('type'))
         self.assertEqual(disk.get_capacity(), self.expected.get('size'))
         self.assertEqual(disk.get_path(), self.loop_path)
 
