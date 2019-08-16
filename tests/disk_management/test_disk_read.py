@@ -32,6 +32,14 @@ class TestDiskRead(unittest.TestCase):
         partitions = egg.disk_management.get_disk(self.loop_path).get_partitions()
         self.assertEqual(len(partitions), self.expected.get('number_of_partition'))
 
+    def test_each_partitions(self) -> None:
+        partitions = egg.disk_management.get_disk(self.loop_path).get_partitions()
+        partitions_expected: list = self.expected.get('partitions')
+        for i in range(0, len(partitions)):
+            with self.subTest(partitions[i]):
+                self.assertEqual(partitions[i].get_capacity(), partitions_expected[i].get('size'))
+                self.assertEqual(partitions[i].get_filesystem().type, partitions_expected[i].get('filesystem'))
+
     @classmethod
     def tearDownClass(cls) -> None:
         os.system(VHD_DIR + cls.vhd_name + '/tear_down.sh')

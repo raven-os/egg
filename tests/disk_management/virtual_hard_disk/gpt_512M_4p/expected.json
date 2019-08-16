@@ -1,5 +1,23 @@
 {
   "model": "Loopback device",
   "size": 536870912,
-  "number_of_partition": 4
+  "number_of_partition": 4,
+  "partitions": [
+    {
+      "size": 204800,
+      "filesystem": "ext4"
+    },
+    {
+      "size": 86016,
+      "filesystem": "ext2"
+    },
+    {
+      "size": 512000,
+      "filesystem": "fat32"
+    },
+    {
+      "size": 243679,
+      "filesystem": "linux-swap(v1)"
+    }
+  ]
 }
