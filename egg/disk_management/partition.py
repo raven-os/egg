@@ -3,7 +3,7 @@ import parted
 
 class Partition(object):
 
-    def __init__(self, partition: parted.Partition) -> None:
+    def __init__(self, partition: parted.Partition):
         self.rawPartition = partition
 
     def get_path(self) -> str:

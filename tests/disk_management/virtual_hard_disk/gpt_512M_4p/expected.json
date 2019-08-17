@@ -2,7 +2,7 @@
   "model": "Loopback device",
   "type": "gpt",
   "size": 536870912,
-  "number_of_partition": 4,
+  "number_of_partitions": 4,
   "partitions": [
     {
       "size": 204800,
