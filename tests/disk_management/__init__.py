@@ -1,7 +1,7 @@
 import json
 import os
 
-VHD_DIR: str = os.path.dirname(os.path.abspath(__file__)) + '/virtual_hard_disk/'
+VHD_DIR: str = f'{os.path.dirname(os.path.abspath(__file__))}/virtual_hard_disk'
 
 
 def create_disk_test_case(testcase_klass, scenario_data: dict = None):
@@ -17,8 +17,7 @@ def create_disk_test_case(testcase_klass, scenario_data: dict = None):
 
 
 def load_expected_results(vhd_name: str) -> dict:
-    file_path = VHD_DIR + vhd_name + '/expected.json'
-    file = open(file_path, 'r')
-    expected_dict = json.load(file)
-    file.close()
+    expected_file_path = f'{VHD_DIR}/{vhd_name}/expected.json'
+    with open(expected_file_path, 'r') as expected_file:
+        expected_dict = json.load(expected_file)
     return expected_dict

@@ -17,8 +17,8 @@ class TestDiskRead(unittest.TestCase):
     @classmethod
     def fillClassVariables(cls, scenario_data):
         cls.vhd_name = scenario_data.get('vhd_name')
-        cls.vhd_table = VHD_DIR + cls.vhd_name + '/vhd.table'
-        os.system(VHD_DIR + cls.vhd_name + '/setup.sh ' + cls.vhd_table)
+        cls.vhd_table = f'{VHD_DIR}/{cls.vhd_name}/vhd.table'
+        os.system(f'{VHD_DIR}/{cls.vhd_name}/setup.sh {cls.vhd_table}')
         cls.expected = load_expected_results(cls.vhd_name)
         cls.loop_path = subprocess.check_output('cat ./loop_path.tmp', shell=True).rstrip().decode("utf-8")
 
@@ -46,4 +46,4 @@ class TestDiskRead(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        os.system(VHD_DIR + cls.vhd_name + '/tear_down.sh')
+        os.system(f'{VHD_DIR}/{cls.vhd_name}/tear_down.sh')
