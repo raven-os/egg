@@ -19,17 +19,18 @@ class Disk(object):
     def __del__(self):
         self.device.removeFromCache()
 
-    def get_model(self) -> str:
+    @property
+    def model(self) -> str:
         return str(self.device.model)
 
-    def get_type(self) -> str:
+    @property
+    def type(self) -> str:
         return self.disk.type
 
-    def get_capacity(self) -> int:
+    @property
+    def capacity(self) -> int:
         return self.device.getLength() * self.device.sectorSize
 
-    def get_partitions(self) -> List[Partition]:
-        return self.partitions
-
-    def get_path(self) -> str:
+    @property
+    def path(self) -> str:
         return self.device.path
