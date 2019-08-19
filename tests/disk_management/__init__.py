@@ -4,15 +4,15 @@ import os
 VHD_DIR: str = f'{os.path.dirname(os.path.abspath(__file__))}/virtual_hard_disk'
 
 
-def create_disk_test_case(testcase_klass, scenario_data: dict = None):
+def create_disk_test_case(testcase_type, scenario_data: dict = None):
 
-    class ScenarioTestCase(testcase_klass):
+    class ScenarioTestCase(testcase_type):
         @classmethod
         def setUpClass(cls):
             cls.fillClassVariables(scenario_data)
 
     return_class = ScenarioTestCase
-    return_class.__name__ = testcase_klass.__name__
+    return_class.__name__ = testcase_type.__name__
     return return_class
 
 
