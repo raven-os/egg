@@ -10,16 +10,16 @@ msgid "sidebar_title"
 msgstr "Live CD language"
 
 msgid "desc_language"
-msgstr "Language:"
+msgstr "Language :"
 
 msgid "desc_keyboard"
-msgstr "Keyboard:"
+msgstr "Keyboard :"
 
 msgid "input_keyboard"
 msgstr "Try the keyboard here"
 
 msgid "french"
-msgstr "french"
+msgstr "French"
 
 msgid "english"
-msgstr "english"
+msgstr "English"
