@@ -4,22 +4,22 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "title"
-msgstr "Configuration de langue du CD autonomne"
+msgstr "Configuration du langage de l'installeur"
 
 msgid "sidebar_title"
-msgstr "Langage CD autonomne"
+msgstr "Langage de l'installeur"
 
 msgid "desc_language"
-msgstr "Langue:"
+msgstr "Langue :"
 
 msgid "desc_keyboard"
-msgstr "Clavier:"
+msgstr "Clavier :"
 
 msgid "input_keyboard"
 msgstr "Essayez le clavier ici"
 
 msgid "french"
-msgstr "français"
+msgstr "Français"
 
 msgid "english"
-msgstr "anglais"
+msgstr "Anglais"

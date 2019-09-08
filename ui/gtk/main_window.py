@@ -4,7 +4,9 @@ import threading
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gdk, GObject, Gtk, GLib, GdkPixbuf
+from ui.gtk.main_window_button import MainWindowButton
 from egg.language_management import LanguageManagement
+from ui.gtk.pages.page import Page
 from ui.gtk.pages.language_live_page import LanguageLivePage
 
 
@@ -97,9 +99,10 @@ class MainWindowGtk:
             u'<span font-size=\'x-large\'>{}</span>'.format(message))
 
     def register_all_pages(self) -> None:
-        all_pages = list()
-
-        all_pages.append(LanguageLivePage(self._locale_general, self._config_general))
+        all_pages = [
+            LanguageLivePage(self._locale_general, self._config_general)
+        ]
+        # Add pages in the stack
         for current_page in all_pages:
             current_page.load_win(self)
             self._component.get_component('main_window_right_stack').add_named(
@@ -107,15 +110,19 @@ class MainWindowGtk:
             self._component.get_component('main_window_left_list_text_box').pack_start(
                 TitleLabel(current_page.get_page_id(), current_page.get_page_sidebar_title()), False, False, 0)
             self._pages.append(current_page)
+    
+    def current_page(self) -> Page:
+        return self._pages[self._page_index]
 
     def load_lang(self) -> None:
         component = self._component.get_component('main_window_left_list_text_box')
         for label in component.get_children():
             component.remove(label)
 
+        # Load pages labels with the current on the left box
         for current_page in self._pages:
             label_in_box = TitleLabel(current_page.get_page_id(), current_page.get_page_sidebar_title())
-            if label_in_box.get_page_id() == self._pages[self._page_index].get_page_id():
+            if label_in_box.get_page_id() == self.current_page().get_page_id():
                 label_in_box.get_style_context().remove_class('dim-label')
             else:
                 label_in_box.get_style_context().add_class('dim-label')
@@ -124,7 +131,7 @@ class MainWindowGtk:
             current_page.refresh_ui_language()
         self._component.get_component('main_window_left_list_text_box').show_all()
 
-        self.set_title(self._pages[self._page_index].get_page_title())
+        self.set_title(self.current_page().get_page_title())
         self._component.get_component('main_window_prev_btn').set_label(
             self._locale_general.translate_msg('main_window', 'bot_right_prev_btn'))
         self._component.get_component('main_window_next_btn').set_label(
@@ -147,55 +154,34 @@ class MainWindowGtk:
         self.update_page()
 
     def update_page(self) -> None:
-        self.set_title(self._pages[self._page_index].get_page_title())
+        self.set_title(self.current_page().get_page_title())
+        self.set_button_action_visibility(MainWindowButton.NEXT, self._page_index != len(self._pages) - 1)
+        self.set_button_action_visibility(MainWindowButton.PREV, self._page_index != 0)
+        self.set_button_visibility(MainWindowButton.NEXT, self._page_index == len(self._pages) - 1)
+        self.set_button_visibility(MainWindowButton.PREV, self._page_index == 0)
 
-        if self._page_index == len(self._pages) - 1:
-            self.set_can_next(False)
-            self.set_hide_next(True)
-        else:
-            self.set_can_next(True)
-            self.set_hide_next(False)
-
-        if self._page_index == 0:
-            self.set_can_prev(False)
-            self.set_hide_prev(True)
-        else:
-            self.set_can_prev(True)
-            self.set_hide_prev(False)
-
-        self._pages[self._page_index].load_page()
-
-        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(self._pages[self._page_index].get_page_icon(), 50, 50, False)
+        self.current_page().load_page()
+        # Update the current page icon
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(self.current_page().get_page_icon(), 50, 50, False)
         self._component.get_component('main_window_top_left_logo').set_from_pixbuf(pixbuf)
+
+        # Update the current highlight page label
         for label in self._component.get_component('main_window_left_list_text_box').get_children():
-            if label.get_page_id() == self._pages[self._page_index].get_page_id():
+            if label.get_page_id() == self.current_page().get_page_id():
                 label.get_style_context().remove_class('dim-label')
             else:
                 label.get_style_context().add_class('dim-label')
         self._component.get_component('main_window_right_stack').set_visible_child_name(
-            self._pages[self._page_index].get_page_id())
+            self.current_page().get_page_id())
 
-    def set_can_prev(self, can_prev: bool) -> None:
-        if self._page_index == 0:
-            can_prev = False
-        self._component.get_component('main_window_prev_btn').set_sensitive(can_prev)
+    def set_button_action_visibility(self, button: MainWindowButton, status: bool) -> None:
+        self._component.get_component(button.value).set_sensitive(status)
 
-    def set_can_next(self, can_next: bool) -> None:
-        if self._page_index == len(self._pages) - 1:
-            can_next = False
-        self._component.get_component('main_window_next_btn').set_sensitive(can_next)
-
-    def set_hide_prev(self, hide: bool) -> None:
-        if hide:
-            self._component.get_component('main_window_prev_btn').hide()
+    def set_button_visibility(self, button: MainWindowButton, hidden: bool) -> None:
+        if hidden:
+            self._component.get_component(button.value).hide()
         else:
-            self._component.get_component('main_window_prev_btn').show_all()
-
-    def set_hide_next(self, hide: bool) -> None:
-        if hide:
-            self._component.get_component('main_window_next_btn').hide()
-        else:
-            self._component.get_component('main_window_next_btn').show_all()
+            self._component.get_component(button.value).show_all()
 
     def init_background_tasks(self) -> None:
         for page in self._pages:
@@ -205,7 +191,7 @@ class MainWindowGtk:
                 pass
 
     def prepare_all_long_tasks_page(self) -> bool:
-        self.set_can_next(False)
+        self.set_button_action_visibility(MainWindowButton.NEXT, False)
         thread = threading.Thread(target=self.init_background_tasks)
         thread.daemon = True
         thread.start()
