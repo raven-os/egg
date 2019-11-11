@@ -29,6 +29,6 @@ class TestBasicEvent(unittest.TestCase):
         event = BasicEvent(BasicTestClass.print_test.__name__, value=1)
         InstallQueue().add(event)
         with captured_output() as (out, err):
-            InstallQueue().execAll()
+            InstallQueue().exec_all()
         output = out.getvalue().strip()
         self.assertEqual(output, 'method_name: print_test, value: 1')
