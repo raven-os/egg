@@ -11,10 +11,10 @@ class InstallQueue(metaclass=Singleton):
     def add(self, event: InstallEvent):
         self.__queue.append(event)
 
-    def execLeft(self):
+    def exec_left(self):
         self.__queue.popleft().exec()
 
-    def execAll(self):
+    def exec_all(self):
         if len(self.__queue) > 0:
-            self.execLeft()
-            self.execAll()
+            self.exec_left()
+            self.exec_all()
